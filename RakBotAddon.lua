@@ -1,5 +1,5 @@
 --[[
-    RakBotAddon v1.0 - library that extends the capabilities of RakBot
+    RakBotAddon v1.01 - library that extends the capabilities of RakBot
     © kizn - 2021
 
     To get debug messages, require the library to be like this:
@@ -19,6 +19,7 @@ local _ = {
 printLog = function(...)
     local args, toBeReturned = {...}, '';
     for i = 1, #args do
+        args[i] = args[i]:gsub('%%', '#') -- thx fr1t
         toBeReturned = toBeReturned..args[i]..' ';
     end
     return pcall(_.printLog, toBeReturned);
