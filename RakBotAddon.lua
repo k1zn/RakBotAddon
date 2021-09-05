@@ -1,5 +1,5 @@
 --[[
-    RakBotAddon v1.01 - library that extends the capabilities of RakBot
+    RakBotAddon v1.02 - library that extends the capabilities of RakBot
     © kizn - 2021
 
     To get debug messages, require the library to be like this:
@@ -216,7 +216,7 @@ getAllPickups = function()
 end
 
 sendPickup = function(pickupId)
-    local _pickupBs = bitStreamNew()
+    local pickupBs = bitStreamNew()
     bitStreamWriteDWord(pickupBs, pickupId)
     sendRpc(131, pickupBs)
     bitStreamDelete(pickupBs)
