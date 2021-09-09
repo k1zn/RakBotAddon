@@ -1,5 +1,5 @@
 --[[
-    RakBotAddon v1.02 - library that extends the capabilities of RakBot
+    RakBotAddon v1.03 - library that extends the capabilities of RakBot
     © kizn - 2021
 
     To get debug messages, require the library to be like this:
@@ -19,7 +19,7 @@ local _ = {
 printLog = function(...)
     local args, toBeReturned = {...}, '';
     for i = 1, #args do
-        args[i] = args[i]:gsub('%%', '#') -- thx fr1t
+        args[i] = tostring(args[i]):gsub('%%', '#') -- thx fr1t
         toBeReturned = toBeReturned..args[i]..' ';
     end
     return pcall(_.printLog, toBeReturned);
@@ -216,10 +216,14 @@ getAllPickups = function()
 end
 
 sendPickup = function(pickupId)
-    local pickupBs = bitStreamNew()
-    bitStreamWriteDWord(pickupBs, pickupId)
-    sendRpc(131, pickupBs)
-    bitStreamDelete(pickupBs)
+    if (tonumber(pickupId)) then
+        local pickupBs = bitStreamNew()
+        bitStreamWriteDWord(pickupBs, tonumber(pickupId))
+        sendRpc(131, pickupBs)
+        bitStreamDelete(pickupBs)
+    else
+        debugLog('Incorrect pickup ID!')
+    end
 end
 
 getRakBotPath = function() -- fix for RakBot 0.8.1
