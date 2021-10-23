@@ -1,5 +1,5 @@
 --[[
-    RakBotAddon v1.03 - library that extends the capabilities of RakBot
+    RakBotAddon v1.1 - library that extends the capabilities of RakBot
     © kizn - 2021
 
     To get debug messages, require the library to be like this:
@@ -12,7 +12,7 @@ local module = { -- for enable debug mode
 
 local _ = { 
     vehicles = {}, chars = {}, pickups = {}, --objects = {}, 
-    anotherShit = nil,
+    anotherShit = nil, botMoney = 0,
     printLog = printLog, getRakBotPath = getRakBotPath, ffi = require('ffi') 
 }
 
@@ -104,6 +104,12 @@ _.addonRecvRpc = function(id, data, size)
         if (_.pickups[pickupId]) then
             _.pickups[pickupId] = nil
         end
+    elseif id == 18 then
+        local bs = bitStreamInit(data, size)
+        _.botMoney = bitStreamReadDWord(bs)
+        bitStreamDelete(bs)
+    elseif id == 20 then
+        _.botMoney = 0
     end
 end
 
@@ -178,6 +184,10 @@ end
 
 getAllPickups = function()
     return _.pickups;
+end
+
+getMoney = function()
+    return _.botMoney
 end
 
 sendPickup = function(pickupId)
