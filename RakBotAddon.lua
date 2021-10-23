@@ -187,7 +187,7 @@ getAllPickups = function()
 end
 
 getMoney = function()
-    return _.botMoney
+    return _.botMoney;
 end
 
 sendPickup = function(pickupId)
