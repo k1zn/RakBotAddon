@@ -1,2 +1,2 @@
 # RakBotAddon
-Theme on BlastHack: https://www.blast.hk/threads/100835/
+Thread on BlastHack: https://www.blast.hk/threads/100835/
