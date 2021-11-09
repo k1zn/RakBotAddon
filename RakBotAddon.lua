@@ -1,5 +1,5 @@
 --[[
-    RakBotAddon v1.2 - library that extends the capabilities of RakBot
+    RakBotAddon v1.21 - library that extends the capabilities of RakBot
     https://github.com/k1zn/RakBotAddon
     © kizn - 2021
 
@@ -139,8 +139,8 @@ local metatableArr = {
     __newindex = function(t, index, value)
         if _.anotherShit ~= nil then _.anotherShit(t, index, value) end
         if (index == 'onRecvRpc') then
+            debugLog('On receive RPC exist on the script!')
             rawset(t, index, function(id, data, size)
-                debugLog('On receive RPC exist on the script!')
                 local res = false
                 if type(value) == 'function' then res = value(id, data, size); end
                 _.addonRecvRpc(id, data, size);
@@ -224,20 +224,6 @@ sampGetPlayerNickname = function(playerId)
         return info.name
     end
     return nil
-end
-
-setWindowName = function(windowName) -- snippet by randazzo https://www.blast.hk/threads/13380/post-233872
-    debugLog('Window name setted to '..windowName)
-    _.ffi.cdef[[
-        typedef unsigned long HANDLE;
-        typedef HANDLE HWND;
-        typedef const char *LPCTSTR;
-
-        HWND GetActiveWindow(void);
-
-        bool SetWindowTextA(HWND hWnd, LPCTSTR lpString);
-    ]]
-    return _.ffi.C.SetWindowTextA(_.ffi.C.GetActiveWindow(), windowName)
 end
 
 return module;
