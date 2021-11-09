@@ -1,5 +1,6 @@
 --[[
-    RakBotAddon v1.1 - library that extends the capabilities of RakBot
+    RakBotAddon v1.2 - library that extends the capabilities of RakBot
+    https://github.com/k1zn/RakBotAddon
     © kizn - 2021
 
     To get debug messages, require the library to be like this:
@@ -140,14 +141,18 @@ local metatableArr = {
         if (index == 'onRecvRpc') then
             rawset(t, index, function(id, data, size)
                 debugLog('On receive RPC exist on the script!')
-                if type(value) == 'function' then value(id, data, size); end
+                local res = false
+                if type(value) == 'function' then res = value(id, data, size); end
                 _.addonRecvRpc(id, data, size);
+                return res;
             end)
         elseif (index == 'onRecvPacket') then
             debugLog('On receive packet exist on the script!')
             rawset(t, index, function(id, data, size)
-                if type(value) == 'function' then value(id, data, size); end
+                local res = false
+                if type(value) == 'function' then res = value(id, data, size); end
                 _.addonRecvPacket(id, data, size);
+                return res;
             end)
         else rawset(t, index, value) end
     end
